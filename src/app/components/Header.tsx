@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import React from "react";
+import ThemeChanger from "./ThemeChanger";
 
 export default function () {
   // mobile menu logic for toggle open and close
@@ -61,7 +62,7 @@ export default function () {
           <Link
             href="/write"
             onClick={mobileMenu}
-            className="text-[white] cursor-[pointer] text-[20px] font-bold text-base tracking-wider transition-colors hover:text-gray-300 z-50"
+            className="cursor-[pointer] text-[20px] font-bold text-base tracking-wider transition-colors hover:text-gray-300 z-50"
           >
             Write
           </Link>
@@ -76,6 +77,8 @@ export default function () {
             Community
           </Link>
         </ul>
+
+        <ThemeChanger/>
       </nav>
       <div className="flex gap-6 items-center justify-center">
         <button className="hidden md:block text-white font-semi-bold  transition-all duration-500 hover:text-white cursor-pointer z-50">
