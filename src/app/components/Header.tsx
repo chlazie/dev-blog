@@ -14,7 +14,7 @@ export default function () {
     }
   };
   return (
-    <header className="flex items-center justify-between border-b-2 py-4 px-16 sm:px-5 md:px-7">
+    <header className="flex items-center justify-between border-b-2 py-4 px-16 sm:px-5 md:px-7  bg-background text-foreground dark:bg-card dark:text-card-foreground">
       <div className="flex items-center justify-center">
         <Link
           href="/"
