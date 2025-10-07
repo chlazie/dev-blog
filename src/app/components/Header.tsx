@@ -78,15 +78,24 @@ export default function () {
           </Link>
         </ul>
 
-        <ThemeChanger/>
+        <ThemeChanger />
       </nav>
       <div className="flex gap-6 items-center justify-center">
-        <button className="hidden md:block text-white font-semi-bold  transition-all duration-500 hover:text-white cursor-pointer z-50">
+        {/* Log In button */}
+        <Link
+          href="/login"
+          className="hidden md:block text-foreground font-semibold transition-all duration-500 hover:text-primary cursor-pointer z-50"
+        >
           Log In
-        </button>
-        <button className="hidden md:block bg-[#a7a7a7] text-black py-3 px-8 rounded-full font-medium border-none transition-all duration-500 hover:bg-white cursor-pointer z-50">
-          <Link href="/sign-in">Sign In</Link>
-        </button>
+        </Link>
+
+        {/* Sign Up button */}
+        <Link
+          href="/signup"
+          className="hidden md:block bg-gradient-to-r from-indigo-500 via-purple-500 to-red-400 rounded-lg text-white py-3 px-8 font-medium border-none transition-all duration-500 hover:opacity-90 cursor-pointer z-50"
+        >
+          Sign Up
+        </Link>
       </div>
 
       {/* Hamburger menu for Mobile Screens */}

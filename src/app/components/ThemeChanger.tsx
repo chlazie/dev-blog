@@ -1,26 +1,44 @@
 // src/app/components/ThemeChanger.tsx
 "use client";
-import { useState, useEffect } from 'react'; // Import useState and useEffect
+
+import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
+import { Button } from '@/components/ui/button';
+import { Moon, Sun } from 'lucide-react';
 
 export default function ThemeChanger() {
-  const [mounted, setMounted] = useState(false); // Add mounted state
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true); // Set mounted to true after the component has mounted
+    setMounted(true);
   }, []);
 
   if (!mounted) {
-    // Return null or a placeholder to prevent rendering mismatched HTML
-    return null;
+    return (
+      <Button variant="ghost" size="icon" aria-label="Loading theme toggle">
+        <div className="h-6 w-6 rounded-full bg-muted animate-pulse" />
+      </Button>
+    );
   }
 
+  const handleToggle = () => {
+    if (theme === 'light') {
+        setTheme('dark');
+    } else {
+        setTheme('light');
+    }
+  };
+
   return (
-    <div>
-      The current theme is: {theme}
-      <button onClick={() => setTheme('light')}>Light Mode</button>
-      <button onClick={() => setTheme('dark')}>Dark Mode</button>
-    </div>
+    <Button
+      variant="ghost"
+      size="icon"
+      aria-label="Toggle theme"
+      onClick={handleToggle}
+    >
+      <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 text-foreground" />
+      <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 text-foreground" />
+    </Button>
   );
 }
