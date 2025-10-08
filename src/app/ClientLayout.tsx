@@ -1,16 +1,21 @@
-// src/app/ClientLayout.tsx
 "use client";
 
-import { AuthProvider } from '@/lib/appwrite/AuthContext';
-import { ThemeProvider } from 'next-themes';
-import './globals.css';
+import { ThemeProvider } from "next-themes";
+import { AuthProvider } from "@/lib/AuthContext";
 
-export default function ClientLayout({ children }) {
+export default function ClientLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <AuthProvider>
-        {children}
-      </AuthProvider>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
+      <AuthProvider>{children}</AuthProvider>
     </ThemeProvider>
   );
 }
