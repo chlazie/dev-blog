@@ -4,52 +4,67 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "./supabaseClient";
 
 type AuthContextType = {
-  user: any | null;
+  user: any;
   loading: boolean;
-  signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string) => Promise<any>;
+  signIn: (email: string, password: string) => Promise<any>;
+  signInWithGoogle: () => Promise<any>;
   signOut: () => Promise<void>;
 };
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<any | null>(null);
+  const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
-  // 🧠 Load user on mount
+  // 🧠 Get session once on mount + listen for changes
   useEffect(() => {
-    const getUser = async () => {
+    const getSession = async () => {
+      setLoading(true);
       const {
-        data: { user },
+        data: { session },
         error,
-      } = await supabase.auth.getUser();
-
-      if (error) console.error("Error getting user:", error.message);
-      setUser(user ?? null);
+      } = await supabase.auth.getSession();
+      if (error) console.error(error);
+      setUser(session?.user ?? null);
       setLoading(false);
     };
 
-    getUser();
+    getSession();
 
-    // 🔄 Real-time auth listener
     const { data: subscription } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
+      (_event, session) => {
         setUser(session?.user ?? null);
       }
     );
 
-    return () => subscription?.subscription.unsubscribe();
+    return () => {
+      subscription?.subscription.unsubscribe();
+    };
   }, []);
 
-  const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+  const signUp = async (email: string, password: string) => {
+    const { data, error } = await supabase.auth.signUp({ email, password });
     if (error) throw error;
+    return data;
   };
 
-  const signUp = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signUp({ email, password });
+  const signIn = async (email: string, password: string) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
     if (error) throw error;
+    return data;
+  };
+
+  const signInWithGoogle = async () => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+    });
+    if (error) throw error;
+    return data;
   };
 
   const signOut = async () => {
@@ -59,7 +74,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, signUp, signOut }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        loading,
+        signUp,
+        signIn,
+        signInWithGoogle,
+        signOut,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -67,6 +91,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) throw new Error("useAuth must be used within an AuthProvider");
+  if (!context)
+    throw new Error("useAuth must be used inside an AuthProvider!");
   return context;
 };
