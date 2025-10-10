@@ -38,7 +38,7 @@ export default function Header() {
             Home
           </Link>
 
-           <Link href="/" className="hover:text-indigo-500 transition">
+           <Link href="/about" className="hover:text-indigo-500 transition">
             About
           </Link>
 
@@ -53,7 +53,7 @@ export default function Header() {
               >
                 Dashboard
               </Link>
-              <Link href="/write" className="hover:text-indigo-500 transition">
+              <Link href="/create" className="hover:text-indigo-500 transition">
                 Create
               </Link>
             </>
@@ -135,6 +135,11 @@ export default function Header() {
           <Link href="/" onClick={() => setMenuOpen(false)}>
             Home
           </Link>
+
+            <Link href="/about" onClick={() => setMenuOpen(false)}>
+            About
+          </Link>
+
           <Link href="/community" onClick={() => setMenuOpen(false)}>
             Community
           </Link>
@@ -143,7 +148,7 @@ export default function Header() {
               <Link href="/dashboard" onClick={() => setMenuOpen(false)}>
                 Dashboard
               </Link>
-              <Link href="/write" onClick={() => setMenuOpen(false)}>
+              <Link href="/create" onClick={() => setMenuOpen(false)}>
                 Create
               </Link>
             </>
