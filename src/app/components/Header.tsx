@@ -37,6 +37,11 @@ export default function Header() {
           <Link href="/" className="hover:text-indigo-500 transition">
             Home
           </Link>
+
+           <Link href="/" className="hover:text-indigo-500 transition">
+            About
+          </Link>
+
           <Link href="/community" className="hover:text-indigo-500 transition">
             Community
           </Link>
