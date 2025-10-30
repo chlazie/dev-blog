@@ -19,10 +19,20 @@ export const metadata: Metadata = {
   description: "A community for modern developers",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <meta
+        name="google-site-verification"
+        content="GtUYzNGn6qXubpI9IO1jZ9u3qb6vk71Z6PQ3rHLvBr0"
+      />
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <ClientLayout>
           <Header />
           <main>{children}</main>
