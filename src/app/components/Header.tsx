@@ -38,7 +38,7 @@ export default function Header() {
             Home
           </Link>
 
-           <Link href="/about" className="hover:text-indigo-500 transition">
+          <Link href="/about" className="hover:text-indigo-500 transition">
             About
           </Link>
 
@@ -55,6 +55,9 @@ export default function Header() {
               </Link>
               <Link href="/create" className="hover:text-indigo-500 transition">
                 Create
+              </Link>{" "}
+              <Link href="/blog" className="hover:text-indigo-500 transition">
+                Feed
               </Link>
             </>
           )}
@@ -136,7 +139,7 @@ export default function Header() {
             Home
           </Link>
 
-            <Link href="/about" onClick={() => setMenuOpen(false)}>
+          <Link href="/about" onClick={() => setMenuOpen(false)}>
             About
           </Link>
 
