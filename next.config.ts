@@ -1,12 +1,29 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  experimental: {
+    turbo: true,
+  },
   images: {
-    domains: [
-      'www.writingbeginner.com',       // external images for blog feed
-      'your-project-id.supabase.co',   // Supabase storage domain
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'wxjryeqnkgauealxqgte.supabase.co', // your Supabase storage
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com', // Google avatar
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.writingbeginner.com', // example blog image host
+        pathname: '/**',
+      },
+      // Add more hosts as needed
     ],
   },
-};
+}
 
-export default nextConfig;
+export default nextConfig

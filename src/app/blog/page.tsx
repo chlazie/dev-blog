@@ -51,15 +51,14 @@ export default function BlogFeed() {
       </div>
     )
 
-  // Featured = first 3 posts
   const featured = posts.slice(0, 3)
   const rest = posts.slice(3)
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10 space-y-16">
-      {/* 🌟 Featured Slider */}
+      {/* Featured Slider */}
       <section className="overflow-x-auto flex gap-6 pb-4 snap-x snap-mandatory">
-        {featured.map((post, i) => (
+        {featured.map((post) => (
           <motion.div
             key={post.id}
             className="relative min-w-[90%] sm:min-w-[60%] md:min-w-[45%] lg:min-w-[33%] snap-center rounded-2xl overflow-hidden shadow-lg cursor-pointer group"
@@ -85,7 +84,7 @@ export default function BlogFeed() {
         ))}
       </section>
 
-      {/* 📰 Main Feed */}
+      {/* Grid Feed */}
       <section className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {rest.map((post) => (
           <motion.div
@@ -94,15 +93,13 @@ export default function BlogFeed() {
             className="border rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm"
           >
             <Link href={`/blog/${post.slug}`}>
-              {post.thumbnail_url && (
-                <Image
-                  src={post.thumbnail_url}
-                  alt={post.title}
-                  width={400}
-                  height={250}
-                  className="w-full h-48 object-cover"
-                />
-              )}
+              <Image
+                src={post.thumbnail_url || '/placeholder.png'}
+                alt={post.title}
+                width={400}
+                height={250}
+                className="w-full h-48 object-cover"
+              />
               <div className="p-4">
                 <h3 className="text-xl font-semibold mb-1">{post.title}</h3>
                 <p className="text-slate-500 text-sm mb-3">
@@ -111,18 +108,19 @@ export default function BlogFeed() {
                 <p className="text-slate-600 dark:text-slate-300 line-clamp-3">
                   {post.excerpt || 'No excerpt available.'}
                 </p>
-                {post.author_avatar && (
-                  <div className="flex items-center gap-2 mt-4">
-                    <Image
-                      src={post.author_avatar}
-                      alt={post.author_name || 'Author'}
-                      width={30}
-                      height={30}
-                      className="rounded-full"
-                    />
-                    <span className="text-sm text-slate-500">{post.author_name}</span>
-                  </div>
-                )}
+
+                <div className="flex items-center gap-2 mt-4">
+                  <Image
+                    src={post.author_avatar || '/default-avatar.png'}
+                    alt={post.author_name || 'Author'}
+                    width={30}
+                    height={30}
+                    className="rounded-full"
+                  />
+                  <span className="text-sm text-slate-500">
+                    {post.author_name || 'Unknown Author'}
+                  </span>
+                </div>
               </div>
             </Link>
           </motion.div>
