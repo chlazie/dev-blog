@@ -26,7 +26,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <meta name="google-site-verification" content="GtUYzNGn6qXubpI9IO1jZ9u3qb6vk71Z6PQ3rHLvBr0" />
+      <meta
+        name="google-site-verification"
+        content="GtUYzNGn6qXubpI9IO1jZ9u3qb6vk71Z6PQ3rHLvBr0"
+      />
+      <meta
+        name="description"
+        content="A website for posting blogs and articles, a community for developers and tech people, a simple free blog app for posting articles relating to tech, and connect with other developers, designers, digital marketers etc. Improve your work today by working with other smart developers."
+      />
+      <meta
+        name="keywords"
+        content="Developers, techies, tech people, articles, blogs, communitiy, developer communities"
+      />
+      <meta name="robots" content="noindex,nofollow" />
+      <meta name="googlebot" content="notranslate" />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
