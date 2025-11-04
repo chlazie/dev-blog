@@ -63,12 +63,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "https://devhoodblog.vercel.app/",
+        redirectTo: "https://devhoodblog.vercel.app",
       },
     });
     if (error) throw error;
     return data;
   };
+  
   
 
   const signOut = async () => {
