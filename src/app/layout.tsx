@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "DevHood",
+  title: "DevHoodBlog",
   description: "A community for modern developers",
 };
 
