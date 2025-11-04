@@ -47,7 +47,7 @@ export default function NotFound() {
           src="/404-illustration.png" // put a nice 404 illustration in public folder
           alt="Lost in space illustration"
           width={300}
-          height={300}
+          height={150}
           className="mx-auto"
         />
       </motion.div>
