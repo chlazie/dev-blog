@@ -6,7 +6,7 @@ import Image from 'next/image'
 
 export default function NotFound() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-linear-to-b from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800 px-4 text-slate-900 dark:text-slate-50">
+    <div className="flex flex-col items-center justify-center min-h-[90vh] bg-linear-to-b from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800 px-4 text-slate-900 dark:text-slate-50">
       {/* Big 404 number */}
       <motion.h1
         className="text-[10rem] font-extrabold mb-4 text-indigo-600 dark:text-indigo-400"
@@ -46,8 +46,8 @@ export default function NotFound() {
         <Image
           src="/404-illustration.png" // put a nice 404 illustration in public folder
           alt="Lost in space illustration"
-          width={300}
-          height={50}
+          width={150}
+          height={100}
           className="mx-auto scale-3d"
         />
       </motion.div>
