@@ -48,7 +48,7 @@ export default function NotFound() {
           alt="Lost in space illustration"
           width={300}
           height={50}
-          className="mx-auto"
+          className="mx-auto scale-3d"
         />
       </motion.div>
 
