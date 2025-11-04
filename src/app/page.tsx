@@ -8,7 +8,7 @@ export default function HomePage() {
     <main className="max-w-7xl mx-auto px-4 py-12 space-y-32">
       
       {/* Hero Section */}
-      <section className="flex flex-col-reverse lg:flex-row items-center gap-12 lg:gap-24">
+      <section className="flex flex-col-reverse lg:flex-row items-center gap-12 lg:gap-24  h-screen">
         <div className="lg:w-1/2 text-center lg:text-left">
           <h1 className="text-5xl font-extrabold mb-4">Write Your Own Posts</h1>
           <p className="text-lg text-slate-600 mb-6">Discover Fascinating Blogs in the DevHood community.</p>
@@ -23,7 +23,7 @@ export default function HomePage() {
         <div className="lg:w-1/2 flex justify-center relative">
           {/* Desktop screenshot */}
           <Image
-            src="/path-to-desktop-mockup.png"
+            src="/image.png"
             alt="App Screenshot"
             width={500}
             height={350}
@@ -31,7 +31,7 @@ export default function HomePage() {
           />
           {/* Mobile screenshot */}
           <Image
-            src="/path-to-mobile-mockup.png"
+            src="/appview.jpeg"
             alt="App Mobile Screenshot"
             width={200}
             height={400}
