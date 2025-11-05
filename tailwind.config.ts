@@ -4,7 +4,11 @@ import typography from "@tailwindcss/typography"
 export default {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
-    extend: {},
+    extend: {
+      blur: {
+        xs: '2px',
+      }
+    },
   },
   plugins: [typography],
 } satisfies Config

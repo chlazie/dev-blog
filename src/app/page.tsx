@@ -37,24 +37,57 @@ export default function HomePage() {
           </div>
 
           <div className="lg:w-1/2 flex justify-center relative">
-            {/* Desktop screenshot */}
-            <Image
-              src="/image.png"
-              alt="App Screenshot"
-              width={500}
-              height={350}
-              className="rounded-2xl shadow-xl"
-            />
-            {/* Mobile screenshot */}
-            <Image
-              src="/appview.jpeg"
-              alt="App Mobile Screenshot"
-              width={200}
-              height={400}
-              className="absolute bottom-0 right-0 -translate-x-12 rounded-2xl shadow-lg"
-            />
-          </div>
+            {/* Desktop Laptop Mockup */}
+            <div className="relative">
+              {/* Laptop Frame */}
+              <div className="relative w-[600px] h-[400px]">
+                {/* Laptop Screen */}
+                <div className="absolute inset-0 bg-gray-800 rounded-t-2xl rounded-b-lg shadow-2xl border-8 border-gray-900">
+                  {/* Screen Content */}
+                  <div className="absolute inset-0 rounded bg-white overflow-hidden">
+                    <Image
+                      src="/image.png"
+                      alt="DevHood App Screenshot"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  {/* Camera Notch */}
+                  <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gray-900 rounded-full"></div>
+                </div>
 
+                {/* Laptop Base */}
+                <div className="absolute -bottom-4 left-8 right-8 h-8 bg-gray-700 rounded-b-lg shadow-lg"></div>
+                <div className="absolute -bottom-6 left-12 right-12 h-2 bg-gray-600 rounded-b-lg"></div>
+              </div>
+
+              {/* Mobile Phone Mockup */}
+              <div className="absolute -bottom-8 -right-8">
+                <div className="relative w-[180px] h-[360px]">
+                  {/* Phone Frame */}
+                  <div className="absolute inset-0 bg-gray-800 rounded-4xl shadow-2xl border-4 border-gray-900">
+                    {/* Screen */}
+                    <div className="absolute inset-[6px] rounded-[1.4rem] bg-white overflow-hidden">
+                      <Image
+                        src="/appview.jpeg"
+                        alt="DevHood Mobile Screenshot"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    {/* Notch */}
+                    <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-16 h-4 bg-gray-900 rounded-b-lg"></div>
+                    {/* Home Indicator */}
+                    <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-gray-900 rounded-full"></div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating Elements for Depth */}
+              <div className="absolute -top-4 -left-4 w-24 h-24 bg-orange-500/10 rounded-full blur-xl"></div>
+              <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-blue-500/10 rounded-full blur-xl"></div>
+            </div>
+          </div>
           {/* Curved Divider - Adjusted positioning */}
           <div className="absolute -bottom-10 left-0 right-0 h-24 overflow-hidden z-0">
             <svg
