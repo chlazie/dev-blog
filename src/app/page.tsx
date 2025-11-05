@@ -10,7 +10,7 @@ export default function HomePage() {
       <Header />
       <main className="max-w-7xl mx-auto px-4 py-12 space-y-32">
         {/* Hero Section */}
-        <section className="flex flex-col-reverse lg:flex-row items-center gap-12 lg:gap-24 h-screen relative">
+        <section className="flex flex-col-reverse lg:flex-row items-center gap-12 lg:gap-24 relative">
           <div className="lg:w-1/2 text-center lg:text-left">
             <h1 className="text-5xl font-extrabold mb-4">
               Join the Developer Community
