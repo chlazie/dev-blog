@@ -20,7 +20,8 @@ interface Post {
   created_at: string
 }
 
-export default function BlogPostPage() {
+export default function BlogPostPage({ params }: { params: { slug: string } }) {
+  console.log('Slug:', params.slug) // Log the slug
   const { slug } = useParams()
   const [post, setPost] = useState<Post | null>(null)
   const [loading, setLoading] = useState(true)

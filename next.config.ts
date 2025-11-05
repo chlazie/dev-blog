@@ -3,6 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   experimental: {
     turbo: true,
+    optimizeCss: true,
   },
   images: {
     remotePatterns: [
@@ -24,6 +25,10 @@ const nextConfig = {
       // Add more hosts as needed
     ],
   },
+
+  optimizeFonts: true,
+  poweredByHeader: false,
+  compress: true,
 }
 
 export default nextConfig
