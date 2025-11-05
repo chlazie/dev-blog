@@ -16,7 +16,9 @@ export default function HomePage() {
               Join the Developer Community
             </h1>
             <p className="text-lg text-slate-600 mb-6">
-              Share your knowledge, learn from peers, and grow together in the DevHood community. Write articles, join discussions, and help fellow developers.
+              Share your knowledge, learn from peers, and grow together in the
+              DevHood community. Write articles, join discussions, and help
+              fellow developers.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
@@ -55,50 +57,65 @@ export default function HomePage() {
         </section>
 
         {/* Email Subscription Section */}
-        <section className="bg-slate-50 rounded-3xl p-12 text-center">
-          <h2 className="text-3xl font-bold mb-4">Stay in the Loop</h2>
-          <p className="text-slate-600 mb-8 max-w-2xl mx-auto">
-            Get the latest developer articles, community updates, and coding resources delivered to your inbox.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
-            />
-            <button className="bg-orange-500 text-white px-6 py-3 rounded-xl hover:bg-orange-600 transition font-semibold">
-              Subscribe
-            </button>
+        <section className="bg-gradient-to-br from-blue-50 via-orange-50 to-purple-50 rounded-3xl p-12 text-center relative overflow-hidden">
+          {/* Glassmorphism background */}
+          <div className="absolute inset-0 bg-white/20 backdrop-blur-sm border border-white/30 rounded-3xl"></div>
+
+          {/* Content container with relative positioning */}
+          <div className="relative z-10">
+            <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-orange-600 bg-clip-text text-transparent">
+              Stay in the Loop
+            </h2>
+            <p className="text-slate-700 mb-8 max-w-2xl mx-auto font-medium">
+              Get the latest developer articles, community updates, and coding
+              resources delivered to your inbox.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="flex-1 px-4 py-3 rounded-xl border border-white/50 bg-white/70 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white/90 transition-all placeholder-slate-500"
+              />
+              <button className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-3 rounded-xl hover:from-orange-600 hover:to-orange-700 transition-all font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                Subscribe
+              </button>
+            </div>
+            <p className="text-sm text-slate-600 mt-4 font-medium">
+              No spam. Unsubscribe at any time.
+            </p>
           </div>
-          <p className="text-sm text-slate-500 mt-4">
-            No spam. Unsubscribe at any time.
-          </p>
         </section>
 
         {/* Features Section */}
         <section className="text-center">
           <h2 className="text-3xl font-bold mb-4">Why Join DevHood?</h2>
           <p className="text-slate-600 mb-12 max-w-2xl mx-auto">
-            We're building more than just a blog - we're creating a space where developers can truly collaborate and grow together.
+            We're building more than just a blog - we're creating a space where
+            developers can truly collaborate and grow together.
           </p>
-          
+
           <div className="grid sm:grid-cols-3 gap-8">
             <div className="p-6 border rounded-2xl shadow hover:shadow-lg transition">
-              <h3 className="text-xl font-semibold mb-2">Share Your Knowledge</h3>
+              <h3 className="text-xl font-semibold mb-2">
+                Share Your Knowledge
+              </h3>
               <p className="text-slate-500">
-                Write articles, share tutorials, and help other developers learn from your experience.
+                Write articles, share tutorials, and help other developers learn
+                from your experience.
               </p>
             </div>
             <div className="p-6 border rounded-2xl shadow hover:shadow-lg transition">
               <h3 className="text-xl font-semibold mb-2">Join the Community</h3>
               <p className="text-slate-500">
-                Connect with developers worldwide, get feedback on your code, and collaborate on projects.
+                Connect with developers worldwide, get feedback on your code,
+                and collaborate on projects.
               </p>
             </div>
             <div className="p-6 border rounded-2xl shadow hover:shadow-lg transition">
               <h3 className="text-xl font-semibold mb-2">Grow Together</h3>
               <p className="text-slate-500">
-                Get help with coding challenges, career advice, and stay updated with modern technologies.
+                Get help with coding challenges, career advice, and stay updated
+                with modern technologies.
               </p>
             </div>
           </div>
@@ -106,9 +123,12 @@ export default function HomePage() {
 
         {/* Final CTA Section */}
         <section className="text-center bg-gradient-to-r from-orange-500 to-orange-600 rounded-3xl p-12 text-white">
-          <h2 className="text-3xl font-bold mb-4">Ready to Join the Community?</h2>
+          <h2 className="text-3xl font-bold mb-4">
+            Ready to Join the Community?
+          </h2>
           <p className="text-orange-100 mb-8 max-w-2xl mx-auto">
-            Thousands of developers are already sharing knowledge and helping each other grow. Don't miss out!
+            Thousands of developers are already sharing knowledge and helping
+            each other grow. Don't miss out!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
