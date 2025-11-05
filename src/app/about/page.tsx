@@ -141,17 +141,17 @@ export default function AboutPage() {
             <h2 className="text-4xl font-bold text-center mb-12 dark:text-white">Our Community Values</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="bg-white dark:bg-slate-800 border dark:border-slate-700 rounded-xl p-6 text-center shadow-sm">
-                <div className="text-3xl mb-3">🤝</div>
+                <div className="text-4xl mb-3">🫱🏾‍🫲🏻</div>
                 <h3 className="font-semibold mb-2 dark:text-white">Collaboration</h3>
                 <p className="text-slate-600 dark:text-slate-400 text-sm">We grow faster when we work together</p>
               </div>
               <div className="bg-white dark:bg-slate-800 border dark:border-slate-700 rounded-xl p-6 text-center shadow-sm">
-                <div className="text-3xl mb-3">💡</div>
+                <div className="text-4xl mb-3">💡</div>
                 <h3 className="font-semibold mb-2 dark:text-white">Knowledge Sharing</h3>
                 <p className="text-slate-600 dark:text-slate-400 text-sm">Your experience can help others overcome challenges</p>
               </div>
               <div className="bg-white dark:bg-slate-800 border dark:border-slate-700 rounded-xl p-6 text-center shadow-sm">
-                <div className="text-3xl mb-3">🙌</div>
+                <div className="text-4xl mb-3">🙌</div>
                 <h3 className="font-semibold mb-2 dark:text-white">Support</h3>
                 <p className="text-slate-600 dark:text-slate-400 text-sm">Everyone deserves help when they're stuck</p>
               </div>
