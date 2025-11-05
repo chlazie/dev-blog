@@ -10,14 +10,59 @@ export default function AboutPage() {
     <>
       <Header />
       <div className="min-h-screen bg-white dark:bg-slate-900 transition-colors">
-        {/* Header */}
-        <header className="bg-slate-900 dark:bg-slate-800 text-white py-20">
-          <div className="max-w-4xl mx-auto px-4 text-center">
-            <h1 className="text-5xl font-bold mb-6">About DevHood</h1>
-            <p className="text-xl text-slate-300 max-w-2xl mx-auto">
-              Building the largest community-driven platform where developers learn, 
-              share, and grow together through collaboration and knowledge sharing.
+        {/* Hero Header - Inspired by the image */}
+        <header className="relative bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white py-32 overflow-hidden">
+          {/* Background Pattern */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-0 left-0 w-72 h-72 bg-orange-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+            <div className="absolute top-0 right-0 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+            <div className="absolute bottom-0 left-1/2 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+          </div>
+          
+          <div className="relative max-w-6xl mx-auto px-4 text-center">
+            {/* Main Heading with Gradient */}
+            <div className="mb-8">
+              <h1 className="text-6xl md:text-8xl font-black mb-6">
+                <span className="bg-gradient-to-r from-orange-400 via-orange-500 to-purple-600 bg-clip-text text-transparent">
+                  Grow
+                </span>
+              </h1>
+              <div className="text-2xl md:text-4xl font-bold mb-6">
+                <span className="text-white">We've got you</span>
+                <span className="bg-gradient-to-r from-orange-400 to-orange-500 bg-clip-text text-transparent"> covered</span>
+              </div>
+            </div>
+            
+            {/* Subtitle */}
+            <p className="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+              Join the largest community-driven platform where developers 
+              <span className="text-orange-400 font-semibold"> learn</span>, 
+              <span className="text-purple-400 font-semibold"> share</span>, and 
+              <span className="text-orange-400 font-semibold"> grow</span> together
             </p>
+            
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
+              <Link
+                href="/join"
+                className="bg-orange-500 text-white px-8 py-4 rounded-xl hover:bg-orange-600 transition font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              >
+                Start Growing Today
+              </Link>
+              <Link
+                href="/contribute"
+                className="border-2 border-white text-white px-8 py-4 rounded-xl hover:bg-white hover:text-slate-900 transition font-semibold text-lg"
+              >
+                Share Your Knowledge
+              </Link>
+            </div>
+          </div>
+          
+          {/* Scroll Indicator */}
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+            <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
+              <div className="w-1 h-3 bg-white rounded-full mt-2 animate-bounce"></div>
+            </div>
           </div>
         </header>
 
@@ -141,17 +186,17 @@ export default function AboutPage() {
             <h2 className="text-4xl font-bold text-center mb-12 dark:text-white">Our Community Values</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="bg-white dark:bg-slate-800 border dark:border-slate-700 rounded-xl p-6 text-center shadow-sm">
-                <div className="text-4xl mb-3">🫱🏾‍🫲🏻</div>
+                <div className="text-3xl mb-3">🤝</div>
                 <h3 className="font-semibold mb-2 dark:text-white">Collaboration</h3>
                 <p className="text-slate-600 dark:text-slate-400 text-sm">We grow faster when we work together</p>
               </div>
               <div className="bg-white dark:bg-slate-800 border dark:border-slate-700 rounded-xl p-6 text-center shadow-sm">
-                <div className="text-4xl mb-3">💡</div>
+                <div className="text-3xl mb-3">💡</div>
                 <h3 className="font-semibold mb-2 dark:text-white">Knowledge Sharing</h3>
                 <p className="text-slate-600 dark:text-slate-400 text-sm">Your experience can help others overcome challenges</p>
               </div>
               <div className="bg-white dark:bg-slate-800 border dark:border-slate-700 rounded-xl p-6 text-center shadow-sm">
-                <div className="text-4xl mb-3">🙌</div>
+                <div className="text-3xl mb-3">🙌</div>
                 <h3 className="font-semibold mb-2 dark:text-white">Support</h3>
                 <p className="text-slate-600 dark:text-slate-400 text-sm">Everyone deserves help when they're stuck</p>
               </div>
