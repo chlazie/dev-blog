@@ -57,9 +57,8 @@ export default function HomePage() {
         </section>
 
         {/* Email Subscription Section */}
-        <section className="bg-linear-to-br from-blue-50 via-orange-50 to-purple-50 rounded-3xl p-12 text-center relative overflow-hidden">
-          {/* Glassmorphism background */}
-          <div className="absolute inset-0 bg-white/20 backdrop-blur-sm border border-white/30 rounded-3xl"></div>
+       <section className="bg-linear-to-br from-slate-800 via-blue-900/20 to-slate-800 rounded-3xl p-12 text-center relative overflow-hidden">
+  <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm border border-slate-700/50 rounded-3xl"></div>
 
           {/* Content container with relative positioning */}
           <div className="relative z-10">
