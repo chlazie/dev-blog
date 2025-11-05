@@ -34,29 +34,29 @@ export default function Header() {
 
         {/* 🧭 Center Navigation */}
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-          <Link href="/" className="text-white hover:to-orange-700 transition">
+          <Link href="/" className=" hover:orange-700 transition">
             Home
           </Link>
 
-          <Link href="/about" className="text-white hover:to-orange-700 transition">
+          <Link href="/about" className=" hover:orange-700 transition">
             About
           </Link>
 
-          <Link href="/community" className="text-white hover:to-orange-700 transition">
+          <Link href="/community" className=" hover:orange-700 transition">
             Community
           </Link>
           {user && (
             <>
               <Link
                 href="/dashboard"
-                className="text-white hover:to-orange-700 transition"
+                className=" hover:orange-700 transition"
               >
                 Dashboard
               </Link>
-              <Link href="/create" className="text-white hover:to-orange-700 transition">
+              <Link href="/create" className=" hover:orange-700 transition">
                 Create
               </Link>{" "}
-              <Link href="/blog" className="text-white hover:to-orange-700 transition">
+              <Link href="/blog" className=" hover:orange-700 transition">
                 Feed
               </Link>
             </>
