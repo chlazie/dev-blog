@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "DevHoodBlog",
-  description: "A community for modern developers",
+  title: "DevHoodBlog | Community for modern developers",
+  description: "DevHood is more than a blog; it's a thriving community built by and for modern developers. We provide a platform to share in-depth technical articles, join discussions on the latest tools, and get real help with code and career hurdles. Whether you're writing your first tutorial or debugging a complex issue, you belong here."
 };
 
 export default function RootLayout({
