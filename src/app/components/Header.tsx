@@ -26,37 +26,37 @@ export default function Header() {
       <div className="flex items-center justify-between max-w-7xl mx-auto px-4 py-3 md:py-4">
         {/* 🌈 Logo */}
         <Link href="/" className="flex items-center gap-1 text-2xl font-bold">
-          <h1 className="text-black dark:text-white">DEV</h1>
-          <span className="px-2 py-1 rounded-lg bg-gradient-to-r from-indigo-500 via-purple-500 to-red-400 text-white">
+          <h1 className="text-orange-700 dark:text-orange-500">DEV</h1>
+          <span className="px-2 py-1 rounded-lg bg-linear-to-r from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-700 transition-all font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
             Hood
           </span>
         </Link>
 
         {/* 🧭 Center Navigation */}
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-          <Link href="/" className="hover:text-indigo-500 transition">
+          <Link href="/" className="hover:to-orange-700 transition">
             Home
           </Link>
 
-          <Link href="/about" className="hover:text-indigo-500 transition">
+          <Link href="/about" className="hover:to-orange-700 transition">
             About
           </Link>
 
-          <Link href="/community" className="hover:text-indigo-500 transition">
+          <Link href="/community" className="hover:to-orange-700 transition">
             Community
           </Link>
           {user && (
             <>
               <Link
                 href="/dashboard"
-                className="hover:text-indigo-500 transition"
+                className="hover:to-orange-700 transition"
               >
                 Dashboard
               </Link>
-              <Link href="/create" className="hover:text-indigo-500 transition">
+              <Link href="/create" className="hover:to-orange-700 transition">
                 Create
               </Link>{" "}
-              <Link href="/blog" className="hover:text-indigo-500 transition">
+              <Link href="/blog" className="hover:to-orange-700 transition">
                 Feed
               </Link>
             </>
@@ -76,7 +76,7 @@ export default function Header() {
             <div className="relative">
               <button
                 onClick={() => setDropdownOpen((p) => !p)}
-                className="flex items-center border rounded-full overflow-hidden hover:ring-2 ring-indigo-500 transition"
+                className="flex items-center border rounded-full overflow-hidden hover:ring-2 ring-orange-700 transition"
               >
                 <img
                   src={user.user_metadata?.avatar_url || "/default-avatar.png"}
@@ -110,12 +110,12 @@ export default function Header() {
             </div>
           ) : (
             <>
-              <Link href="/login" className="hover:text-indigo-500 transition">
+              <Link href="/login" className="hover:to-orange-700 transition">
                 Log In
               </Link>
               <Link
                 href="/signup"
-                className="bg-gradient-to-r from-indigo-500 via-purple-500 to-red-400 text-white rounded-lg px-4 py-2 hover:opacity-90 transition"
+                className="bg-linear-to-r from-orange-500 to-orange-600 text-white px-6 py-3 rounded-xl hover:from-orange-600 hover:to-orange-700 transition-all font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
               >
                 Sign Up
               </Link>
@@ -153,6 +153,9 @@ export default function Header() {
               </Link>
               <Link href="/create" onClick={() => setMenuOpen(false)}>
                 Create
+              </Link>
+               <Link href="/create" onClick={() => setMenuOpen(false)}>
+                Feed
               </Link>
             </>
           )}
