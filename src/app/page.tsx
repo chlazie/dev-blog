@@ -89,7 +89,7 @@ export default function HomePage() {
             </div>
           </div>
           {/* Curved Divider - Adjusted positioning */}
-          <div className="absolute -bottom-10 left-0 right-0 h-24 overflow-hidden z-0">
+          {/* <div className="absolute -bottom-10 left-0 right-0 h-24 overflow-hidden z-0">
             <svg
               viewBox="0 0 1200 120"
               preserveAspectRatio="none"
@@ -100,7 +100,7 @@ export default function HomePage() {
                 className="fill-slate-50"
               ></path>
             </svg>
-          </div>
+          </div> */}
         </section>
 
         {/* Email Subscription Section */}
