@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "DevHoodBlog | Community for modern developers",
+export const metadata: Metadata = { 
+  title: "DevHood | A Modern Developer Community & Blog",
   description: "DevHood is more than a blog; it's a thriving community built by and for modern developers. We provide a platform to share in-depth technical articles, join discussions on the latest tools, and get real help with code and career hurdles. Whether you're writing your first tutorial or debugging a complex issue, you belong here."
 };
 
