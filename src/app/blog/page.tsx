@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabaseClient'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import Header from '../components/Header'
 
 interface Post {
   id: string
@@ -55,6 +56,8 @@ export default function BlogFeed() {
   const rest = posts.slice(3)
 
   return (
+    <div>
+      <Header/>
     <div className="max-w-6xl mx-auto px-4 py-10 space-y-16">
       {/* Featured Slider */}
       <section className="overflow-x-auto flex gap-6 pb-4 snap-x snap-mandatory">
@@ -126,6 +129,7 @@ export default function BlogFeed() {
           </motion.div>
         ))}
       </section>
+    </div>
     </div>
   )
 }

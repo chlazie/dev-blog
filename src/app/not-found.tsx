@@ -3,9 +3,12 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import Header from './components/Header'
 
 export default function NotFound() {
   return (
+    <div>
+      <Header/>
     <div className="flex flex-col items-center justify-center h-screen bg-linear-to-b from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800 px-4 text-slate-900 dark:text-slate-50">
       {/* Big 404 number */}
       <motion.h1
@@ -64,6 +67,7 @@ export default function NotFound() {
           Go Back Home
         </Link>
       </motion.div>
+    </div>
     </div>
   )
 }

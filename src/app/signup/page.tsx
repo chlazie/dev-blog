@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/AuthContext";
+import Header from "../components/Header";
 
 export default function SignupPage() {
   const { signUp, signInWithGoogle, user } = useAuth();
@@ -39,6 +40,8 @@ export default function SignupPage() {
   };
 
   return (
+    <>
+    <Header/>
     <div className="min-h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-white dark:bg-gray-900 border rounded-lg p-6 shadow">
         <h2 className="text-2xl font-semibold mb-4">Create an account</h2>
@@ -110,5 +113,6 @@ export default function SignupPage() {
         </p>
       </div>
     </div>
+    </>
   );
 }

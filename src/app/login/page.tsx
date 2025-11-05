@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/AuthContext";
+import Header from "../components/Header";
 
 export default function LoginPage() {
   const { signIn, signInWithGoogle, user } = useAuth();
@@ -35,6 +36,8 @@ export default function LoginPage() {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="min-h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-white dark:bg-gray-900 border rounded-lg p-6 shadow">
         <h2 className="text-2xl font-semibold mb-4">Log in to DevHood</h2>
@@ -95,6 +98,7 @@ export default function LoginPage() {
           </a>
         </p>
       </div>
+    </div>
     </div>
   );
 }
