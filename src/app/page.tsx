@@ -57,13 +57,13 @@ export default function HomePage() {
         </section>
 
         {/* Email Subscription Section */}
-        <section className="bg-gradient-to-br from-blue-50 via-orange-50 to-purple-50 rounded-3xl p-12 text-center relative overflow-hidden">
+        <section className="bg-linear-to-br from-blue-50 via-orange-50 to-purple-50 rounded-3xl p-12 text-center relative overflow-hidden">
           {/* Glassmorphism background */}
           <div className="absolute inset-0 bg-white/20 backdrop-blur-sm border border-white/30 rounded-3xl"></div>
 
           {/* Content container with relative positioning */}
           <div className="relative z-10">
-            <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-orange-600 bg-clip-text text-transparent">
+            <h2 className="text-3xl font-bold mb-4 bg-linear-to-r from-blue-600 to-orange-600 bg-clip-text text-transparent">
               Stay in the Loop
             </h2>
             <p className="text-slate-700 mb-8 max-w-2xl mx-auto font-medium">
@@ -76,7 +76,7 @@ export default function HomePage() {
                 placeholder="Enter your email"
                 className="flex-1 px-4 py-3 rounded-xl border border-white/50 bg-white/70 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white/90 transition-all placeholder-slate-500"
               />
-              <button className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-3 rounded-xl hover:from-orange-600 hover:to-orange-700 transition-all font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+              <button className="bg-linear-to-r from-orange-500 to-orange-600 text-white px-6 py-3 rounded-xl hover:from-orange-600 hover:to-orange-700 transition-all font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                 Subscribe
               </button>
             </div>
