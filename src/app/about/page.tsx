@@ -2,9 +2,13 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import Header from "../components/Header";
+
 
 export default function AboutPage() {
   return (
+    <>
+    <Header/>
     <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="bg-slate-900 text-white py-20">
@@ -183,5 +187,6 @@ export default function AboutPage() {
         </section>
       </main>
     </div>
+    </>
   );
 }
