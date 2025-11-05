@@ -27,36 +27,36 @@ export default function Header() {
         {/* 🌈 Logo */}
         <Link href="/" className="flex items-center gap-1 text-2xl font-bold">
           <h1 className="text-orange-700 dark:text-orange-500">DEV</h1>
-          <span className="px-2 py-1 rounded-lg bg-linear-to-r from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-700 transition-all font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+          <span className="px-2 py-1 rounded-lg bg-linear-to-r from-orange-700 to-orange-500 text-white hover:from-orange-600 hover:to-orange-700 transition-all font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
             Hood
           </span>
         </Link>
 
         {/* 🧭 Center Navigation */}
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-          <Link href="/" className="hover:to-orange-700 transition">
+          <Link href="/" className="text-white hover:to-orange-700 transition">
             Home
           </Link>
 
-          <Link href="/about" className="hover:to-orange-700 transition">
+          <Link href="/about" className="text-white hover:to-orange-700 transition">
             About
           </Link>
 
-          <Link href="/community" className="hover:to-orange-700 transition">
+          <Link href="/community" className="text-white hover:to-orange-700 transition">
             Community
           </Link>
           {user && (
             <>
               <Link
                 href="/dashboard"
-                className="hover:to-orange-700 transition"
+                className="text-white hover:to-orange-700 transition"
               >
                 Dashboard
               </Link>
-              <Link href="/create" className="hover:to-orange-700 transition">
+              <Link href="/create" className="text-white hover:to-orange-700 transition">
                 Create
               </Link>{" "}
-              <Link href="/blog" className="hover:to-orange-700 transition">
+              <Link href="/blog" className="text-white hover:to-orange-700 transition">
                 Feed
               </Link>
             </>
