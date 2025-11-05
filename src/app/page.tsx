@@ -8,7 +8,7 @@ export default function HomePage() {
   return (
     <div>
       <Header />
-      <main className="max-w-7xl mx-auto px-4 py-12 space-y-32">
+      <main className="">
         {/* Hero Section */}
         <section className="flex flex-col-reverse lg:flex-row items-center gap-12 lg:gap-24 relative pt-20 pb-40 lg:py-24">
           <div className="lg:w-1/2 text-center lg:text-left">
