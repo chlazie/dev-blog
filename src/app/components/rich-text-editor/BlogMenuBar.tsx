@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { ImagePlus, Upload, Send } from "lucide-react";
 import { Button } from "../../../app/components/ui/button"
 
-
 export default function BlogMenuBar({
   onPublish,
   onImageUpload,
@@ -44,13 +43,10 @@ export default function BlogMenuBar({
       </div>
 
       <div className="flex items-center gap-2">
-        <Button variant="outline" size="sm">
-          <Upload className="w-4 h-4 mr-1" /> Insert
-        </Button>
         <Button
           size="sm"
           onClick={onPublish}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white"
+          className="bg-orange-500 hover:bg-orange-600 text-white"
         >
           <Send className="w-4 h-4 mr-1" />
           Publish

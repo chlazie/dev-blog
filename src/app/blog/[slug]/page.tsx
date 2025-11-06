@@ -2,6 +2,7 @@
 import { notFound } from 'next/navigation'
 import { supabase } from '@/lib/supabaseClient'
 import Link from 'next/link'
+import Image from 'next/image'
 import Header from '@/app/components/Header'
 import Footer from '@/app/components/Footer'
 
@@ -72,6 +73,19 @@ export default async function BlogPostPage({ params }: PageProps) {
             <span className="text-slate-700 dark:text-slate-300">Article</span>
           </nav>
 
+          {/* Featured Image */}
+          {post.thumbnail_url && (
+            <div className="mb-8 rounded-2xl overflow-hidden">
+              <Image
+                src={post.thumbnail_url}
+                alt={post.title}
+                width={800}
+                height={400}
+                className="w-full h-64 md:h-80 object-cover"
+              />
+            </div>
+          )}
+
           {/* Article Header */}
           <header className="mb-8">
             <h1 className="text-4xl md:text-5xl font-bold mb-4 dark:text-white leading-tight">
@@ -79,14 +93,17 @@ export default async function BlogPostPage({ params }: PageProps) {
             </h1>
             
             <div className="flex items-center gap-4 text-slate-600 dark:text-slate-400">
-              {post.author_name && (
-                <>
-                  <div className="flex items-center gap-2">
-                    <span>{post.author_name}</span>
-                  </div>
-                  <span>•</span>
-                </>
-              )}
+              <div className="flex items-center gap-2">
+                <Image
+                  src={post.author_avatar || '/default-avatar.png'}
+                  alt={post.author_name || 'Author'}
+                  width={40}
+                  height={40}
+                  className="rounded-full"
+                />
+                <span>{post.author_name || 'Unknown Author'}</span>
+              </div>
+              <span>•</span>
               <time dateTime={post.created_at}>
                 {new Date(post.created_at).toLocaleDateString('en-US', {
                   year: 'numeric',
@@ -111,16 +128,67 @@ export default async function BlogPostPage({ params }: PageProps) {
             dangerouslySetInnerHTML={{ __html: post.content }} 
           />
 
-          {/* Back to Blog */}
-          <div className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-700">
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-2 text-orange-500 hover:text-orange-600 font-semibold transition"
-            >
-              ← Back to all posts
-            </Link>
-          </div>
+          {/* Article Footer */}
+          <footer className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-700">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <div className="flex items-center gap-3">
+                <Image
+                  src={post.author_avatar || '/default-avatar.png'}
+                  alt={post.author_name || 'Author'}
+                  width={48}
+                  height={48}
+                  className="rounded-full"
+                />
+                <div>
+                  <p className="font-semibold dark:text-white">{post.author_name || 'Unknown Author'}</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">DevHood Community Member</p>
+                </div>
+              </div>
+              
+              <Link
+                href="/blog"
+                className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-6 py-3 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition font-semibold"
+              >
+                ← Back to Blog
+              </Link>
+            </div>
+          </footer>
         </article>
+
+        {/* Related Posts */}
+        <section className="max-w-6xl mx-auto px-4 py-16">
+          <h2 className="text-3xl font-bold mb-8 dark:text-white text-center">More Articles You Might Like</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {/* You can fetch related posts here if needed */}
+            <div className="text-center py-12 text-slate-500">
+              <p>More articles coming soon...</p>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="max-w-4xl mx-auto px-4 py-16">
+          <div className="bg-linear-to-r from-orange-500 to-orange-600 rounded-3xl p-8 text-white text-center">
+            <h2 className="text-2xl font-bold mb-4">Enjoyed this article?</h2>
+            <p className="text-orange-100 mb-6">
+              Join DevHood to write your own articles and share your knowledge with the community.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/create"
+                className="bg-white text-orange-600 px-6 py-3 rounded-lg hover:bg-orange-50 transition font-semibold"
+              >
+                Write an Article
+              </Link>
+              <Link
+                href="/join"
+                className="border-2 border-white text-white px-6 py-3 rounded-lg hover:bg-white hover:text-orange-600 transition font-semibold"
+              >
+                Join Community
+              </Link>
+            </div>
+          </div>
+        </section>
       </div>
       <Footer />
     </>
