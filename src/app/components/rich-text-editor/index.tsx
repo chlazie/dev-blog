@@ -31,7 +31,11 @@ export default function Create() {
     extensions: [
       StarterKit,
       Underline,
-      Image,
+      Image.configure({
+        HTMLAttributes: {
+          class: "rounded-lg max-w-full h-auto",
+        },
+      }),
       TextAlign.configure({ types: ["heading", "paragraph"] }),
     ],
     content: "<p>Start writing your masterpiece... ✨</p>",
@@ -39,7 +43,7 @@ export default function Create() {
     editorProps: {
       attributes: {
         class:
-          "min-h-[600px] border rounded-md bg-slate-50 px-3 py-2 dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:outline-none",
+          "min-h-[600px] border rounded-md bg-slate-50 px-3 py-2 dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:outline-none prose prose-lg max-w-none",
       },
     },
   });
@@ -52,6 +56,8 @@ export default function Create() {
     });
 
     try {
+      console.log("📤 Starting image upload:", file.name, file.type, file.size);
+
       // Validate file type
       if (!file.type.startsWith("image/")) {
         throw new Error(
@@ -66,25 +72,57 @@ export default function Create() {
         );
       }
 
+      // Upload the file
+      const fileName = `public/${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
       const { data, error } = await supabase.storage
         .from("blog-images")
-        .upload(`public/${Date.now()}-${file.name}`, file);
+        .upload(fileName, file, {
+          cacheControl: '3600',
+          upsert: false
+        });
 
       if (error) {
+        console.error("❌ Upload error:", error);
         throw new Error(`Upload failed: ${error.message}`);
       }
 
-      const { data: publicUrlData } = supabase.storage
-        .from("blog-images")
-        .getPublicUrl(data.path);
+      console.log("✅ Upload successful:", data);
 
-      const imageUrl = publicUrlData.publicUrl;
-      editor?.chain().focus().setImage({ src: imageUrl }).run();
+      // Get public URL - FIXED VERSION
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+      const imageUrl = `${supabaseUrl}/storage/v1/object/public/blog-images/${data.path}`;
+      
+      console.log("🔗 Image URL:", imageUrl);
+
+      // Test if image loads before inserting
+      await new Promise((resolve, reject) => {
+        const testImage = new Image();
+        testImage.onload = () => {
+          console.log("✅ Image loads successfully");
+          resolve(true);
+        };
+        testImage.onerror = () => {
+          console.log("❌ Image failed to load");
+          reject(new Error("Image failed to load after upload"));
+        };
+        testImage.src = imageUrl;
+      });
+
+      // Insert into editor with proper styling
+      if (editor) {
+        editor.chain().focus().setImage({ 
+          src: imageUrl,
+          alt: "Uploaded image",
+          title: "Uploaded image"
+        }).run();
+        console.log("📝 Image inserted into editor");
+      }
 
       toast.success("Image uploaded successfully!", {
         description: "Your image has been added to the editor",
         id: uploadToast,
       });
+
     } catch (error) {
       toast.error("Upload failed", {
         description:
@@ -92,7 +130,7 @@ export default function Create() {
         id: uploadToast,
       });
       console.error("Image upload error:", error);
-      throw error; // Re-throw to be handled in BlogMenuBar
+      throw error;
     }
   };
 
@@ -166,13 +204,20 @@ export default function Create() {
           author_avatar:
             user.user_metadata?.avatar_url || "/default-avatar.png",
           created_at: new Date().toISOString(),
-          read_count: 0, // ✅ Add this back
         },
       ]);
 
       if (error) {
         console.error("Supabase error:", error);
-        throw new Error(`Failed to publish: ${error.message}`);
+        
+        // Handle specific Supabase errors
+        if (error.code === '42501') {
+          throw new Error("Permission denied. Please check your Supabase policies.");
+        } else if (error.code === '23505') {
+          throw new Error("A post with this title already exists.");
+        } else {
+          throw new Error(`Failed to publish: ${error.message}`);
+        }
       }
 
       // Success - clear form and show success message
@@ -189,10 +234,11 @@ export default function Create() {
         },
       });
 
-      // Optional: Redirect to blog after successful publish
+      // Redirect to blog after successful publish
       setTimeout(() => {
         window.location.href = "/blog";
       }, 3000);
+
     } catch (error) {
       toast.error("Failed to publish", {
         description:
@@ -202,7 +248,7 @@ export default function Create() {
         id: publishToast,
       });
       console.error("Publish error:", error);
-      throw error; // Re-throw to be handled in BlogMenuBar
+      throw error;
     }
   };
 
@@ -210,7 +256,6 @@ export default function Create() {
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (value.length <= 100) {
-      // Limit title to 100 characters
       setTitle(value);
     }
   };
