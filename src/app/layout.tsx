@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import ClientLayout from "./ClientLayout";
+import { Toaster } from 'sonner'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -63,6 +64,12 @@ export default function RootLayout({
         <ClientLayout>
           <main>{children}</main>
         </ClientLayout>
+         <Toaster 
+          position="top-right"
+          expand={true}
+          richColors
+          closeButton
+        />
       </body>
     </html>
   );

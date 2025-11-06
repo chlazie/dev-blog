@@ -7,7 +7,7 @@ import Footer from "./components/Footer";
 
 export default function HomePage() {
   return (
-    <div>
+    <div className="overflow-x-hidden">
       <Header />
       <main className="max-w-7xl mx-auto px-4 py-12 space-y-32">
         {/* Hero Section */}
