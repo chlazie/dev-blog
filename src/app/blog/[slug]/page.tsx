@@ -5,7 +5,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Header from '@/app/components/Header'
 import Footer from '@/app/components/Footer'
-import { useEffect } from 'react'
 
 interface Post {
   id: string
@@ -61,19 +60,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     notFound()
   }
 
-  // In your [slug]/page.tsx, add this effect:
-useEffect(() => {
-  const incrementReadCount = async () => {
-    await supabase
-      .from('posts')
-      .update({ read_count: (post.read_count || 0) + 1 })
-      .eq('id', post.id)
-  }
   
-  if (post) {
-    incrementReadCount()
-  }
-}, [post])
 
   return (
     <>
