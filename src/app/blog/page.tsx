@@ -18,21 +18,21 @@ interface Post {
   author_avatar?: string
   excerpt?: string
   created_at: string
+  read_count?: number
 }
 
 export default function BlogFeed() {
   const [posts, setPosts] = useState<Post[]>([])
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
-  const getImageSrc = (url: string | undefined, fallback: string) => {
-  return url || fallback
-}
+  const [currentSlide, setCurrentSlide] = useState(0)
 
   useEffect(() => {
     const fetchPosts = async () => {
       const { data, error } = await supabase
         .from('posts')
         .select('*')
+        .order('read_count', { ascending: false })
         .order('created_at', { ascending: false })
 
       if (error) {
@@ -46,11 +46,24 @@ export default function BlogFeed() {
     fetchPosts()
   }, [])
 
+  // Auto-advance slides every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % Math.min(mostReadPosts.length, 3))
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [posts])
+
   const filteredPosts = posts.filter(post =>
     post.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
     post.excerpt?.toLowerCase().includes(searchQuery.toLowerCase()) ||
     post.author_name?.toLowerCase().includes(searchQuery.toLowerCase())
   )
+
+  // Get top 3 most read posts (or most recent if no read_count)
+  const mostReadPosts = posts
+    .sort((a, b) => (b.read_count || 0) - (a.read_count || 0))
+    .slice(0, 3)
 
   if (loading) return (
     <div>
@@ -66,8 +79,8 @@ export default function BlogFeed() {
     <>
       <Header />
       
-      {/* Hero Section */}
-      <section className="bg-linear-to-br from-slate-900 to-slate-800 text-white py-20">
+      {/* Hero Section - Keep your existing design */}
+      <section className="bg-gradient-to-br from-slate-900 to-slate-800 text-white py-20">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h1 className="text-5xl font-bold mb-6">Developer Blog</h1>
           <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-8">
@@ -92,12 +105,117 @@ export default function BlogFeed() {
         </div>
       </section>
 
+      {/* Most Read Articles Banner Slider */}
+      {mostReadPosts.length > 0 && (
+        <section className="max-w-7xl mx-auto px-4 py-8">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-3xl font-bold dark:text-white flex items-center">
+              <span className="bg-red-500 text-white p-2 rounded-lg mr-3">🔥</span>
+              Most Read Articles
+            </h2>
+            <div className="flex space-x-2">
+              {mostReadPosts.slice(0, 3).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`w-3 h-3 rounded-full transition ${
+                    currentSlide === index ? 'bg-orange-500' : 'bg-slate-300'
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="relative bg-gradient-to-r from-orange-500 to-orange-600 rounded-3xl overflow-hidden shadow-2xl">
+            {/* Slider Container */}
+            <div className="relative h-80 md:h-96">
+              {mostReadPosts.slice(0, 3).map((post, index) => (
+                <div
+                  key={post.id}
+                  className={`absolute inset-0 transition-opacity duration-500 ${
+                    currentSlide === index ? 'opacity-100' : 'opacity-0'
+                  }`}
+                >
+                  <div className="grid md:grid-cols-2 h-full">
+                    {/* Text Content */}
+                    <div className="flex flex-col justify-center p-8 md:p-12 text-white">
+                      <div className="mb-4">
+                        <span className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium">
+                          🔥 Most Read
+                        </span>
+                      </div>
+                      <h3 className="text-2xl md:text-3xl font-bold mb-4 line-clamp-3">
+                        {post.title}
+                      </h3>
+                      <p className="text-orange-100 mb-6 line-clamp-3">
+                        {post.excerpt || 'No excerpt available.'}
+                      </p>
+                      <div className="flex items-center gap-4 text-orange-100 mb-6">
+                        <div className="flex items-center gap-2">
+                          <Image
+                            src={post.author_avatar || '/default-avatar.png'}
+                            alt={post.author_name || 'Author'}
+                            width={32}
+                            height={32}
+                            className="rounded-full"
+                          />
+                          <span>{post.author_name || 'Unknown Author'}</span>
+                        </div>
+                        <span>•</span>
+                        <span>{new Date(post.created_at).toLocaleDateString()}</span>
+                        {post.read_count && (
+                          <>
+                            <span>•</span>
+                            <span>👁️ {post.read_count} reads</span>
+                          </>
+                        )}
+                      </div>
+                      <Link
+                        href={`/blog/${post.slug}`}
+                        className="bg-white text-orange-600 px-6 py-3 rounded-lg hover:bg-orange-50 transition font-semibold inline-flex items-center gap-2 w-fit"
+                      >
+                        Read Article →
+                      </Link>
+                    </div>
+
+                    {/* Image */}
+                    <div className="relative hidden md:block">
+                      <Image
+                        src={post.thumbnail_url || '/placeholder.png'}
+                        alt={post.title}
+                        fill
+                        className="object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-l from-orange-500/50 to-transparent" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Navigation Arrows */}
+            <button
+              onClick={() => setCurrentSlide((prev) => (prev - 1 + 3) % 3)}
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition backdrop-blur-sm"
+            >
+              ←
+            </button>
+            <button
+              onClick={() => setCurrentSlide((prev) => (prev + 1) % 3)}
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition backdrop-blur-sm"
+            >
+              →
+            </button>
+          </div>
+        </section>
+      )}
+
       <div className="max-w-7xl mx-auto px-4 py-12 space-y-16">
-        {/* Featured Posts */}
+        {/* Latest Articles */}
         {filteredPosts.length > 0 && (
           <section>
             <h2 className="text-3xl font-bold mb-8 dark:text-white flex items-center">
-              <span className="bg-orange-500 text-white p-2 rounded-lg mr-3">🔥</span>
+              <span className="bg-orange-500 text-white p-2 rounded-lg mr-3">📰</span>
               Latest Articles
             </h2>
             <div className="grid lg:grid-cols-3 gap-6">
@@ -115,11 +233,6 @@ export default function BlogFeed() {
                         height={250}
                         className="w-full h-48 object-cover group-hover:scale-105 transition duration-300"
                       />
-                      <div className="absolute top-4 left-4">
-                        <span className="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-                          New
-                        </span>
-                      </div>
                     </div>
                     <div className="p-6">
                       <h3 className="text-xl font-bold mb-3 line-clamp-2 group-hover:text-orange-500 transition dark:text-white">
@@ -216,7 +329,7 @@ export default function BlogFeed() {
         </section>
 
         {/* CTA Section */}
-        <section className="text-center bg-linear-to-r from-orange-500 to-orange-600 rounded-3xl p-12 text-white">
+        <section className="text-center bg-gradient-to-r from-orange-500 to-orange-600 rounded-3xl p-12 text-white">
           <h2 className="text-3xl font-bold mb-4">Ready to Share Your Knowledge?</h2>
           <p className="text-orange-100 mb-8 max-w-2xl mx-auto">
             Join thousands of developers who are already writing articles, sharing tutorials, and helping others grow.
