@@ -1,142 +1,157 @@
-'use client'
+"use client";
 
-import { useEditor, EditorContent } from '@tiptap/react'
-import React, { useState } from 'react'
-import StarterKit from '@tiptap/starter-kit'
-import Underline from '@tiptap/extension-underline'
-import TextAlign from '@tiptap/extension-text-align'
-import Image from '@tiptap/extension-image'
-import BlogMenuBar from './BlogMenuBar'
-import MenuBar from './menu-bar'
-import { supabase } from '@/lib/supabaseClient'
-import { toast } from 'sonner'
+import { useEditor, EditorContent } from "@tiptap/react";
+import React, { useState } from "react";
+import StarterKit from "@tiptap/starter-kit";
+import Underline from "@tiptap/extension-underline";
+import TextAlign from "@tiptap/extension-text-align";
+import Image from "@tiptap/extension-image";
+import BlogMenuBar from "./BlogMenuBar";
+import MenuBar from "./menu-bar";
+import { supabase } from "@/lib/supabaseClient";
+import { toast } from "sonner";
 
 // 🌀 Helper to generate a clean slug from the title
 const slugify = (text: string) =>
   text
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-') // replace spaces/punctuation
-    .replace(/(^-|-$)+/g, '')     // trim hyphens
-    .trim()
+    .replace(/[^a-z0-9]+/g, "-") // replace spaces/punctuation
+    .replace(/(^-|-$)+/g, "") // trim hyphens
+    .trim();
 
 export default function Create() {
   const getExcerpt = (html: string, length = 150) => {
-    const tmp = document.createElement('div')
-    tmp.innerHTML = html
-    const text = tmp.textContent || tmp.innerText || ''
-    return text.substring(0, length) + (text.length > length ? '…' : '')
-  }
-  
+    const tmp = document.createElement("div");
+    tmp.innerHTML = html;
+    const text = tmp.textContent || tmp.innerText || "";
+    return text.substring(0, length) + (text.length > length ? "…" : "");
+  };
+
   const editor = useEditor({
-    extensions: [StarterKit, Underline, Image, TextAlign.configure({ types: ['heading', 'paragraph'] })],
-    content: '<p>Start writing your masterpiece... ✨</p>',
+    extensions: [
+      StarterKit,
+      Underline,
+      Image,
+      TextAlign.configure({ types: ["heading", "paragraph"] }),
+    ],
+    content: "<p>Start writing your masterpiece... ✨</p>",
     immediatelyRender: false,
     editorProps: {
       attributes: {
         class:
-          'min-h-[600px] border rounded-md bg-slate-50 px-3 py-2 dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:outline-none',
+          "min-h-[600px] border rounded-md bg-slate-50 px-3 py-2 dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:outline-none",
       },
     },
-  })
+  });
 
-  const [title, setTitle] = useState('')
+  const [title, setTitle] = useState("");
 
   const handleImageUpload = async (file: File): Promise<void> => {
-    const uploadToast = toast.loading('Uploading image...', {
-      description: 'Please wait while we upload your image'
-    })
+    const uploadToast = toast.loading("Uploading image...", {
+      description: "Please wait while we upload your image",
+    });
 
     try {
       // Validate file type
-      if (!file.type.startsWith('image/')) {
-        throw new Error('Invalid file type. Please select an image file (JPEG, PNG, GIF, etc.)')
+      if (!file.type.startsWith("image/")) {
+        throw new Error(
+          "Invalid file type. Please select an image file (JPEG, PNG, GIF, etc.)"
+        );
       }
 
       // Validate file size (5MB limit)
       if (file.size > 5 * 1024 * 1024) {
-        throw new Error('File too large. Please select an image smaller than 5MB')
+        throw new Error(
+          "File too large. Please select an image smaller than 5MB"
+        );
       }
 
       const { data, error } = await supabase.storage
-        .from('blog-images')
-        .upload(`public/${Date.now()}-${file.name}`, file)
+        .from("blog-images")
+        .upload(`public/${Date.now()}-${file.name}`, file);
 
       if (error) {
-        throw new Error(`Upload failed: ${error.message}`)
+        throw new Error(`Upload failed: ${error.message}`);
       }
 
       const { data: publicUrlData } = supabase.storage
-        .from('blog-images')
-        .getPublicUrl(data.path)
+        .from("blog-images")
+        .getPublicUrl(data.path);
 
-      const imageUrl = publicUrlData.publicUrl
-      editor?.chain().focus().setImage({ src: imageUrl }).run()
+      const imageUrl = publicUrlData.publicUrl;
+      editor?.chain().focus().setImage({ src: imageUrl }).run();
 
-      toast.success('Image uploaded successfully!', {
-        description: 'Your image has been added to the editor',
-        id: uploadToast
-      })
+      toast.success("Image uploaded successfully!", {
+        description: "Your image has been added to the editor",
+        id: uploadToast,
+      });
     } catch (error) {
-      toast.error('Upload failed', {
-        description: error instanceof Error ? error.message : 'Failed to upload image',
-        id: uploadToast
-      })
-      console.error('Image upload error:', error)
-      throw error // Re-throw to be handled in BlogMenuBar
+      toast.error("Upload failed", {
+        description:
+          error instanceof Error ? error.message : "Failed to upload image",
+        id: uploadToast,
+      });
+      console.error("Image upload error:", error);
+      throw error; // Re-throw to be handled in BlogMenuBar
     }
-  }
+  };
 
   // 📝 Publish with title + slug
   const handlePublish = async (): Promise<void> => {
     if (!editor) {
-      throw new Error('Editor not available')
+      throw new Error("Editor not available");
     }
 
     if (!title.trim()) {
-      throw new Error('Please add a title for your article')
+      throw new Error("Please add a title for your article");
     }
 
     // Validate content length
-    const html = editor.getHTML()
-    const textContent = editor.getText()
+    const html = editor.getHTML();
+    const textContent = editor.getText();
     if (textContent.trim().length < 50) {
-      throw new Error('Article content seems too short. Please write at least 50 characters.')
+      throw new Error(
+        "Article content seems too short. Please write at least 50 characters."
+      );
     }
 
-    const publishToast = toast.loading('Publishing your article...', {
-      description: 'This may take a moment'
-    })
+    const publishToast = toast.loading("Publishing your article...", {
+      description: "This may take a moment",
+    });
 
     try {
       // Get the user
-      const { data: userData, error: userError } = await supabase.auth.getUser()
-      const user = userData?.user
+      const { data: userData, error: userError } =
+        await supabase.auth.getUser();
+      const user = userData?.user;
 
       if (userError || !user) {
-        throw new Error('You must be logged in to publish articles')
+        throw new Error("You must be logged in to publish articles");
       }
 
-      const slug = slugify(title)
-      const excerpt = getExcerpt(html, 180)
+      const slug = slugify(title);
+      const excerpt = getExcerpt(html, 180);
 
       // Extract first image for thumbnail if any
-      const tempDiv = document.createElement('div')
-      tempDiv.innerHTML = html
-      const firstImg = tempDiv.querySelector('img')
-      const thumbnail_url = firstImg?.getAttribute('src') || null
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = html;
+      const firstImg = tempDiv.querySelector("img");
+      const thumbnail_url = firstImg?.getAttribute("src") || null;
 
       // Check if slug already exists
       const { data: existingPost } = await supabase
-        .from('posts')
-        .select('slug')
-        .eq('slug', slug)
-        .single()
+        .from("posts")
+        .select("slug")
+        .eq("slug", slug)
+        .single();
 
       if (existingPost) {
-        throw new Error('A post with this title already exists. Please choose a different title.')
+        throw new Error(
+          "A post with this title already exists. Please choose a different title."
+        );
       }
 
-      const { error } = await supabase.from('posts').insert([
+      const { error } = await supabase.from("posts").insert([
         {
           title: title.trim(),
           content: html,
@@ -144,54 +159,61 @@ export default function Create() {
           excerpt,
           thumbnail_url,
           author_id: user.id,
-          author_name: user.user_metadata?.full_name || user.email?.split('@')[0] || 'Anonymous',
-          author_avatar: user.user_metadata?.avatar_url || '/default-avatar.png',
+          author_name:
+            user.user_metadata?.full_name ||
+            user.email?.split("@")[0] ||
+            "Anonymous",
+          author_avatar:
+            user.user_metadata?.avatar_url || "/default-avatar.png",
           created_at: new Date().toISOString(),
-          read_count: 0,
+          read_count: 0, // ✅ Add this back
         },
-      ])
+      ]);
 
       if (error) {
-        console.error('Supabase error:', error)
-        throw new Error(`Failed to publish: ${error.message}`)
+        console.error("Supabase error:", error);
+        throw new Error(`Failed to publish: ${error.message}`);
       }
 
       // Success - clear form and show success message
-      setTitle('')
-      editor.commands.clearContent()
-      
-      toast.success('Article published successfully! 🎉', {
-        description: 'Your article is now live on the blog',
+      setTitle("");
+      editor.commands.clearContent();
+
+      toast.success("Article published successfully! 🎉", {
+        description: "Your article is now live on the blog",
         id: publishToast,
         duration: 6000,
         action: {
-          label: 'View Blog',
-          onClick: () => window.open('/blog', '_blank')
-        }
-      })
+          label: "View Blog",
+          onClick: () => window.open("/blog", "_blank"),
+        },
+      });
 
       // Optional: Redirect to blog after successful publish
       setTimeout(() => {
-        window.location.href = '/blog'
-      }, 3000)
-
+        window.location.href = "/blog";
+      }, 3000);
     } catch (error) {
-      toast.error('Failed to publish', {
-        description: error instanceof Error ? error.message : 'An unexpected error occurred',
-        id: publishToast
-      })
-      console.error('Publish error:', error)
-      throw error // Re-throw to be handled in BlogMenuBar
+      toast.error("Failed to publish", {
+        description:
+          error instanceof Error
+            ? error.message
+            : "An unexpected error occurred",
+        id: publishToast,
+      });
+      console.error("Publish error:", error);
+      throw error; // Re-throw to be handled in BlogMenuBar
     }
-  }
+  };
 
   // Handle title change with character limit
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    if (value.length <= 100) { // Limit title to 100 characters
-      setTitle(value)
+    const value = e.target.value;
+    if (value.length <= 100) {
+      // Limit title to 100 characters
+      setTitle(value);
     }
-  }
+  };
 
   return (
     <div className="max-w-3xl mx-auto mt-10 border rounded-md overflow-hidden shadow-sm bg-white dark:bg-slate-900">
@@ -218,7 +240,10 @@ export default function Create() {
       </div>
 
       {/* Menu Bars */}
-      <BlogMenuBar onPublish={handlePublish} onImageUpload={handleImageUpload} />
+      <BlogMenuBar
+        onPublish={handlePublish}
+        onImageUpload={handleImageUpload}
+      />
       <div className="border-b bg-white dark:bg-slate-800">
         <MenuBar editor={editor} />
       </div>
@@ -237,5 +262,5 @@ export default function Create() {
         </ul>
       </div>
     </div>
-  )
+  );
 }

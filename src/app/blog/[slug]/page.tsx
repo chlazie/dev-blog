@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Header from '@/app/components/Header'
 import Footer from '@/app/components/Footer'
+import { incrementReadCount } from '@/lib/readTracker'
 
 interface Post {
   id: string
@@ -21,6 +22,8 @@ interface Post {
 interface PageProps {
   params: Promise<{ slug: string }>
 }
+
+
 
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params
@@ -59,6 +62,9 @@ export default async function BlogPostPage({ params }: PageProps) {
   if (!post) {
     notFound()
   }
+
+
+  await incrementReadCount(post.id)
 
   
 
