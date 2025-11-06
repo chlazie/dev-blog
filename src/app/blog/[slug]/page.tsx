@@ -18,17 +18,15 @@ interface Post {
 }
 
 interface PageProps {
-  params: {
-    slug: string
-  }
+  params: Promise<{ slug: string }>
 }
 
-// Generate metadata for SEO
 export async function generateMetadata({ params }: PageProps) {
+  const { slug } = await params
   const { data: post } = await supabase
     .from('posts')
     .select('*')
-    .eq('slug', params.slug)
+    .eq('slug', slug)
     .single()
 
   if (!post) {
@@ -43,22 +41,17 @@ export async function generateMetadata({ params }: PageProps) {
   }
 }
 
-// Generate static paths for better performance
-export async function generateStaticParams() {
-  const { data: posts } = await supabase
-    .from('posts')
-    .select('slug')
-
-  return posts?.map((post) => ({
-    slug: post.slug,
-  })) || []
-}
-
 export default async function BlogPostPage({ params }: PageProps) {
+  const { slug } = await params
+  
+  if (!slug) {
+    notFound()
+  }
+
   const { data: post } = await supabase
     .from('posts')
     .select('*')
-    .eq('slug', params.slug)
+    .eq('slug', slug)
     .single()
 
   if (!post) {

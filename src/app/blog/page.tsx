@@ -20,48 +20,61 @@ interface Post {
   created_at: string
 }
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  console.log('Slug:', params.slug) // Log the slug
-  const { slug } = useParams()
+export default function BlogPostPage() {
+  const params = useParams()
+  const slug = params.slug as string
   const [post, setPost] = useState<Post | null>(null)
   const [loading, setLoading] = useState(true)
   const [relatedPosts, setRelatedPosts] = useState<Post[]>([])
 
   useEffect(() => {
     const fetchPostAndRelated = async () => {
-      // Fetch the main post
-      const { data: postData, error: postError } = await supabase
-        .from('posts')
-        .select('*')
-        .eq('slug', slug)
-        .single()
+      if (!slug) {
+        console.log('No slug found')
+        setLoading(false)
+        return
+      }
 
-      if (postError) {
-        console.error('Error fetching post:', postError)
-      } else {
-        setPost(postData)
+      console.log('Fetching post for slug:', slug)
 
-        // Fetch related posts (excluding current post)
-        const { data: relatedData, error: relatedError } = await supabase
+      try {
+        // Fetch the main post
+        const { data: postData, error: postError } = await supabase
           .from('posts')
           .select('*')
-          .neq('slug', slug)
-          .order('created_at', { ascending: false })
-          .limit(3)
+          .eq('slug', slug)
+          .single()
 
-        if (relatedError) console.error('Error fetching related posts:', relatedError)
-        else setRelatedPosts(relatedData)
+        if (postError) {
+          console.error('Error fetching post:', postError)
+        } else {
+          setPost(postData)
+
+          // Fetch related posts (excluding current post)
+          const { data: relatedData, error: relatedError } = await supabase
+            .from('posts')
+            .select('*')
+            .neq('slug', slug)
+            .order('created_at', { ascending: false })
+            .limit(3)
+
+          if (relatedError) console.error('Error fetching related posts:', relatedError)
+          else setRelatedPosts(relatedData || [])
+        }
+      } catch (error) {
+        console.error('Unexpected error:', error)
+      } finally {
+        setLoading(false)
       }
-      setLoading(false)
     }
 
-    if (slug) fetchPostAndRelated()
+    fetchPostAndRelated()
   }, [slug])
 
   if (loading) return (
     <div>
       <Header />
-      <div className="flex justify-center items-center h-screen text-slate-400 text-lg">
+      <div className="flex justify-center items-center min-h-screen text-slate-400 text-lg">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500 mr-3"></div>
         Loading article...
       </div>
@@ -84,6 +97,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
           Back to Blog
         </Link>
       </div>
+      <Footer />
     </div>
   )
 
